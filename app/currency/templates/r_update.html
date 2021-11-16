@@ -1,0 +1,10 @@
+{%extends 'base.html'%}
+{%block main_content%}
+<form method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <a href="/r_read/"><button>вернуться</button></a>
+    <button type="submit">поменять</button>
+
+</form>
+{%endblock%}
