@@ -7,6 +7,8 @@ from currency.views import r_read
 from currency.views import r_update
 from currency.views import r_details
 from currency.views import r_delete
+from currency.views import random_logins
+from currency.views import clear_regs
 
 urlpatterns = [
     path('', index),
@@ -18,4 +20,6 @@ urlpatterns = [
     path('r_read/details/<int:reg_id>', r_details),
     path('r_read/update/<int:reg_id>', r_update),
     path('r_read/delete/<int:reg_id>', r_delete),
+    path('logins_gen/', random_logins),
+    path('delete_base/', clear_regs),
 ]

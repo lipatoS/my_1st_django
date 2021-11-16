@@ -1,10 +1,30 @@
 {%extends 'base.html'%}
 {%block main_content%}
-точно удалить: {{object.login}}?
-<form method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <button type="submit">подвердить</button>
-</form>
-<a href="/r_read/"><button>отмена</button></a>
+<tr>
+    <td>
+        вы уверены что хотите удалить?</br></br>
+    </td>
+    <td>
+        id: {{object.id}}</br>
+    </td>
+    <td>
+        login: {{object.login}}</br>
+    </td>
+</tr>
+</br>
+<tr>
+    <td>
+        <form method="post">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit">подвердить</button>
+        </form>
+    </td>
+    </br>
+    <td>
+        <a href="/r_read/"><button>отмена</button></a>
+    </td>
+</tr>
+
+
 {%endblock%}

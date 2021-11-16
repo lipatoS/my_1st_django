@@ -1,12 +1,11 @@
 {%extends 'base.html'%}
 {%block main_content%}
-<!--<a href="/rate/create">create rate</a></br>-->
 {%for i in message%}
 id: {{i.id}}</br>
 login: {{i.login}}</br>
 </br>
-<a href="/r_read/details/{{i.id}}">подробнее</a>
-<a href="/r_read/update/{{i.id}}">редактировать</a>
+<a href="/r_read/details/{{i.id}}">подробнее</a></br>
+<a href="/r_read/update/{{i.id}}">редактировать</a></br>
 <a href="/r_read/delete/{{i.id}}">удалить</a>
 </br>
 </br>
