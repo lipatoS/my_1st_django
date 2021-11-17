@@ -10,8 +10,12 @@ from currency.views import r_delete
 from currency.views import random_logins
 from currency.views import clear_regs
 
+import debug_toolbar
+from django.urls import include, path
+
 urlpatterns = [
     path('', index),
+    path('__debug__/', include(debug_toolbar.urls)),
     path('admin/', admin.site.urls),
     path('hello/', hello_world),
     path('r_create/', r_create),
