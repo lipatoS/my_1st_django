@@ -1,73 +1,66 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from currency.form import RegForms
+from django.shortcuts import render
 from currency.models import Registrator
+from currency.form import RegForms
 from currency.login_gen import log_gen, pass_gen, mails_gen
+from django.views.generic import ListView
+from django.views.generic import CreateView
+from django.views.generic import UpdateView
+from django.views.generic import DeleteView
+from django.views.generic import DetailView
+from django.views.generic import TemplateView
 
 
-def hello_world(request):
-    return HttpResponse("+++++++++")
+class RegIndexViews(TemplateView):
+    template_name = "index.html"
 
 
-def index(request):
-    return render(request, "index.html")
+class RegCreateViews(CreateView):
+    model = Registrator
+    form_class = RegForms
+    template_name = "r_create.html"
+    success_url = '/r_read'
 
 
-def r_create(request):
-    if request.method == 'POST':
-        form = RegForms(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/r_read/')
-    elif request.method == "GET":
-        forms = RegForms()
-    text = {"form": forms}
-    return render(request, "r_create.html", context=text)
+class RegReadViews(ListView):
+    model = Registrator
+    template_name = "r_read.html"
 
 
-def r_read(request):
-    regs = Registrator.objects.all()
-    text = {"message": regs}
-    return render(request, "r_read.html", context=text)
+class RegUpdateViews(UpdateView):
+    model = Registrator
+    form_class = RegForms
+    template_name = "r_update.html"
+    success_url = '/r_read'
 
 
-def r_update(request, reg_id):
-    reg = get_object_or_404(Registrator, id=reg_id)
-    if request.method == 'POST':
-        form = RegForms(request.POST, instance=reg)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/r_read/')
-    elif request.method == "GET":
-        forms = RegForms(instance=reg)
-    text = {"form": forms}
-
-    return render(request, "r_update.html", context=text)
+class RegDeleteViews(DeleteView):
+    model = Registrator
+    template_name = "r_delete.html"
+    success_url = '/r_read/'
 
 
-def r_details(request, reg_id):
-    reg = get_object_or_404(Registrator, id=reg_id)
-    text = {"object": reg}
-    return render(request, "r_details.html", context=text)
+class RegDetailsViews(DetailView):
+    model = Registrator
+    template_name = "r_details.html"
 
 
-def r_delete(request, reg_id):
-    reg = get_object_or_404(Registrator, id=reg_id)
-    if request.method == 'POST':
-        reg.delete()
-        return HttpResponseRedirect('/r_read/')
-    text = {"object": reg}
+class RandomLoginsViews(TemplateView):
+    template_name = "logins_gen.html"
 
-    return render(request, "r_delete.html", context=text)
-
-
-def random_logins(request):
-    log = log_gen()
-    result = Registrator.objects.create(login=log, passwords=pass_gen(), mails=mails_gen(log))
-    text = {"random_user": result}
-    return render(request, "logins_gen.html", context=text)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        log = log_gen()
+        result = Registrator.objects.create(
+            login=log,
+            passwords=pass_gen(),
+            mails=mails_gen(log),
+        )
+        context["random_user"] = result
+        return context
 
 
-def clear_regs(request):
-    Registrator.objects.all().delete()
-    return request(request, "delete_base.html")
+class ClearRegsViews(TemplateView):
+    template_name = "delete_base.html"
+
+    def get_context_data(self, **kwargs):
+        Registrator.objects.all().delete()
