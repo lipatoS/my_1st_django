@@ -2,6 +2,7 @@ from django.shortcuts import render
 from currency.models import Registrator
 from currency.form import RegForms
 from currency.login_gen import log_gen, pass_gen, mails_gen
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
@@ -18,7 +19,7 @@ class RegCreateViews(CreateView):
     model = Registrator
     form_class = RegForms
     template_name = "r_create.html"
-    success_url = '/r_read'
+    success_url = reverse_lazy("reg-read")
 
 
 class RegReadViews(ListView):
@@ -30,13 +31,13 @@ class RegUpdateViews(UpdateView):
     model = Registrator
     form_class = RegForms
     template_name = "r_update.html"
-    success_url = '/r_read'
+    success_url = reverse_lazy("reg-read")
 
 
 class RegDeleteViews(DeleteView):
     model = Registrator
     template_name = "r_delete.html"
-    success_url = '/r_read/'
+    success_url = reverse_lazy("reg-read")
 
 
 class RegDetailsViews(DetailView):

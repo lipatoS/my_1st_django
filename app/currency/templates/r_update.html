@@ -3,7 +3,7 @@
 <form method="post">
     {%csrf_token%}
     {{form.as_p}}
-    <a href="/r_read/"><button>отмена</button></a>
+    <a href="{%url 'reg-read'%}"><button>отмена</button></a>
     <button type="submit">применить</button>
 
 </form>

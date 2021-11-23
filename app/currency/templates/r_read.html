@@ -4,9 +4,9 @@
 id: {{i.id}}</br>
 login: {{i.login}}</br>
 </br>
-<a href="/r_read/details/{{i.id}}">подробнее</a></br>
-<a href="/r_read/update/{{i.id}}">редактировать</a></br>
-<a href="/r_read/delete/{{i.id}}">удалить</a>
+<a href="{%url 'reg-info' pk=i.pk%}">подробнее</a></br>
+<a href="{%url 'reg-update' pk=i.pk%}">редактировать</a></br>
+<a href="{%url 'reg-delete' pk=i.pk%}">удалить</a>
 </br>
 </br>
 {%endfor%}
